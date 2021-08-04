@@ -1,0 +1,117 @@
+<?xml version='1.0'?>
+
+<robot name='my_robot' xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <link name='chassi'>
+        <inertial>
+            <mass value="1"/>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <inertia ixx="1" ixy="0.0" ixz="0.0" iyy="1" iyz="0.0" izz="1"/>
+        </inertial>
+
+        <collision name= 'collision_chassi'>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <box size="0.4 0.2 0.1"/>
+            </geometry>
+        </collision>
+
+        <visual name='visual_chassi'>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <box size="0.4 0.2 0.1"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <link name='caster'>
+        <inertial>
+            <mass value="0.1"/>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <inertia ixx="1" ixy="0.0" ixz="0.0" iyy="1" iyz="0.0" izz="1"/>
+        </inertial>
+
+        <collision name='collision_caster'>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <sphere radius="0.05"/>
+            </geometry>
+        </collision>
+
+        <visual name='visual_caster'>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <sphere radius="0.05"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <link name='left_wheel'>
+        <inertial>
+            <mass value="0.5"/>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <inertia ixx="1" ixy="0.0" ixz="0.0" iyy="1" iyz="0.0" izz="1"/>
+        </inertial>
+
+        <collision name='collision_left_wheel'>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <cylinder radius="0.1" length="0.05"/>
+            </geometry>
+        </collision>
+
+        <visual name='visual_left_wheel'>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <cylinder radius="0.1" length="0.05"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <link name='right_wheel'>
+        <inertial>
+            <mass value="0.5"/>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <inertia ixx="1" ixy="0.0" ixz="0.0" iyy="1" iyz="0.0" izz="1"/>
+        </inertial>
+
+        <collision name='collision_left_wheel'>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <cylinder radius="0.1" length="0.05"/>
+            </geometry>
+        </collision>
+
+        <visual name='visual_left_wheel'>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <cylinder radius="0.1" length="0.05"/>
+            </geometry>
+        </visual>
+    </link>
+
+<!-- ====================Joints=================== -->
+
+    <joint name="joint_caster" type="fixed">
+        <parent link="chassi"/>
+        <child link="caster"/>
+        <origin rpy="0 0 0" xyz="-0.15 0 -0.05"/>
+    </joint>
+
+    <joint name="joint_left_wheel" type="revolute">
+        <parent link="chassi"/>
+        <child link="left_wheel"/>
+        <origin rpy="0 1.5707 1.5707" xyz="0.1 0.13 0"/>
+        <axis xyz="0 0 1"/>
+        <limit effort="-1.0" lower="-1e+16" upper="1e+16" velocity="-1.0"/>
+    </joint>
+
+    <joint name="joint_right_wheel" type="revolute">
+        <parent link="chassi"/>
+        <child link="right_wheel"/>
+        <origin rpy="0 1.5707 1.5707" xyz="0.1 -0.13 0"/>
+        <axis xyz="0 0 1"/>
+        <limit effort="-1.0" lower="-1e+16" upper="1e+16" velocity="-1.0"/>
+    </joint>
+
+</robot>
