@@ -2,6 +2,8 @@
 
 <robot name='my_robot' xmlns:xacro="http://www.ros.org/wiki/xacro">
 
+    <xacro:include filename="$(find simulation)/models/robot/robot.gazebo.xacro" />
+
     <link name='chassi'>
         <inertial>
             <mass value="1"/>
@@ -12,36 +14,36 @@
         <collision name= 'collision_chassi'>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
-                <box size="0.4 0.2 0.1"/>
+                <box size='0.4 0.2 0.1'/>
             </geometry>
         </collision>
 
         <visual name='visual_chassi'>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
-                <box size="0.4 0.2 0.1"/>
+                <box size='0.4 0.2 0.1'/>
             </geometry>
         </visual>
     </link>
 
     <link name='caster'>
         <inertial>
-            <mass value="0.1"/>
+            <mass value="0.5"/>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <inertia ixx="1" ixy="0.0" ixz="0.0" iyy="1" iyz="0.0" izz="1"/>
         </inertial>
 
-        <collision name='collision_caster'>
+        <collision name= 'collision_caster'>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
-                <sphere radius="0.05"/>
+                <sphere radius='0.05'/>
             </geometry>
         </collision>
 
         <visual name='visual_caster'>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
-                <sphere radius="0.05"/>
+                <sphere radius='0.05'/>
             </geometry>
         </visual>
     </link>
@@ -53,7 +55,7 @@
             <inertia ixx="1" ixy="0.0" ixz="0.0" iyy="1" iyz="0.0" izz="1"/>
         </inertial>
 
-        <collision name='collision_left_wheel'>
+        <collision name= 'collision_left_wheel'>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
                 <cylinder radius="0.1" length="0.05"/>
@@ -75,14 +77,14 @@
             <inertia ixx="1" ixy="0.0" ixz="0.0" iyy="1" iyz="0.0" izz="1"/>
         </inertial>
 
-        <collision name='collision_left_wheel'>
+        <collision name= 'collision_right_wheel'>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
                 <cylinder radius="0.1" length="0.05"/>
             </geometry>
         </collision>
 
-        <visual name='visual_left_wheel'>
+        <visual name='visual_right_wheel'>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
                 <cylinder radius="0.1" length="0.05"/>
@@ -90,8 +92,51 @@
         </visual>
     </link>
 
-<!-- ====================Joints=================== -->
+    <link name='camera1'>
+        <inertial>
+            <mass value="0.01"/>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <inertia ixx="1" ixy="0.0" ixz="0.0" iyy="1" iyz="0.0" izz="1"/>
+        </inertial>
 
+        <collision name= 'collision_camera1'>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <box size='0.05 0.05 0.05'/>
+            </geometry>
+        </collision>
+
+        <visual name='visual_camera1'>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <box size='0.05 0.05 0.05'/>
+            </geometry>
+        </visual>
+    </link>
+
+    <link name='laser1'>
+        <inertial>
+            <mass value="0.01"/>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <inertia ixx="1" ixy="0.0" ixz="0.0" iyy="1" iyz="0.0" izz="1"/>
+        </inertial>
+
+        <collision name= 'collision_laser1'>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <box size='0.05 0.05 0.05'/>
+            </geometry>
+        </collision>
+
+        <visual name='visual_laser1'>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <box size='0.05 0.05 0.05'/>
+            </geometry>
+        </visual>
+    </link>
+
+<!--==================== Joints ====================-->
     <joint name="joint_caster" type="fixed">
         <parent link="chassi"/>
         <child link="caster"/>
@@ -114,4 +159,15 @@
         <limit effort="-1.0" lower="-1e+16" upper="1e+16" velocity="-1.0"/>
     </joint>
 
+    <joint name="joint_camera1" type="fixed">
+        <parent link="chassi"/>
+        <child link="camera1"/>
+        <origin rpy="0 0 3.1415" xyz="-0.15 0 0.075"/>
+    </joint>
+
+    <joint name="joint_laser1" type="fixed">
+        <parent link="chassi"/>
+        <child link="laser1"/>
+        <origin rpy="0 0 3.1415" xyz="-0.2 0 0.015"/>
+    </joint>
 </robot>
